@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+    redis:
+        image: redis
+        container_name: cache
+        command: --port 6380
+        ports:
+            - 6380:6380
+        expose:
+            - '6380'
+        networks:
+            - mynetwork
+
+    redis-insight:
+        image: redis/redisinsight:latest
+        environment:
+            - RI_APP_PORT=8080
+        ports:
+            - 8080:8080
+        depends_on:
+            - redis
+        networks:
+            - mynetwork
+
+    app:
+        build: ./
+        container_name: calculator
+        volumes:
+            - ./:/usr/src/app
+            - /usr/src/app/node_modules
+        depends_on:
+            - redis
+        ports:
+            - 8010:8010
+        networks:
+            - mynetwork
+        environment:
+            - PORT=${PORT}
+            - NODE_ENV=${NODE_ENV}
+            - REDIS_URL=${REDIS_URL}
+networks:
+    mynetwork:
+        name: mynetwork
