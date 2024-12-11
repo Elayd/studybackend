@@ -1,6 +1,6 @@
 import { DeliveryCostCalculator } from '../../utils/calculateCost';
 
-describe('DeliveryCostCalculator - calculateCost', () => {
+describe('DeliveryCostCalculator - calculateCost UNITS', () => {
   let calculator: DeliveryCostCalculator;
 
   beforeEach(() => {
@@ -95,7 +95,7 @@ describe('DeliveryCostCalculator - calculateCost', () => {
 
     expect(() => {
       calculator.calculateCost(width, height, depth, weight, distance, isStrict);
-    }).toThrow('Ошибка');
+    }).toThrow('NO_TEMPLATE_SIZE_ERROR');
   });
 
   it('should fall due oversize in strict mode', () => {
@@ -108,7 +108,7 @@ describe('DeliveryCostCalculator - calculateCost', () => {
 
     expect(() => {
       calculator.calculateCost(width, height, depth, weight, distance, isStrict);
-    }).toThrow('Ошибка');
+    }).toThrow('NO_TEMPLATE_SIZE_ERROR');
   });
 
   it('should fall due Overweight in non strict mode', () => {
@@ -121,7 +121,7 @@ describe('DeliveryCostCalculator - calculateCost', () => {
 
     expect(() => {
       calculator.calculateCost(width, height, depth, weight, distance, isStrict);
-    }).toThrow('Overweight');
+    }).toThrow('OVERWEIGHT_ERROR');
   });
 
   it('should calculate the cost correctly in non strict as in strict same values', () => {

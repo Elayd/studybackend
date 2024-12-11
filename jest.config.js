@@ -1,12 +1,3 @@
 export default {
-  clearMocks: true,
-  coverageProvider: 'v8',
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  roots: ['<rootDir>/src'],
-
-  testMatch: ['**/__tests__/**/*.+(ts|tsx|js)', '**/?(*.)+(spec|test).+(ts|tsx|js)'],
-  testEnvironment: 'node',
-  transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest'
-  }
+  projects: ['<rootDir>/jest.unit.config.js', '<rootDir>/jest.integration.config.js']
 };

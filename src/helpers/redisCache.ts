@@ -20,7 +20,7 @@ class CacheManager {
     return null;
   }
 
-  public async set<T>(key: string, data: T, ttl: number = 60): Promise<void> {
+  public async set<T>(key: string, data: T, ttl: number = 6000): Promise<void> {
     await redisClient.setex(key, ttl, JSON.stringify(data));
   }
 

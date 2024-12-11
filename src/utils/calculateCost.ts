@@ -1,3 +1,7 @@
+import { ErrorsDescriptions } from '../enums/errorsDescriptions';
+import HttpStatusCode from '../enums/httpStatusCodes';
+import { AppError } from '../helpers/errorHandler';
+
 interface SizePricing {
   width: number;
   height: number;
@@ -84,7 +88,7 @@ export class DeliveryCostCalculator {
   private calculateInterpolatedSizeCoef(width: number, height: number, depth: number, weight: number): number {
     const volume = width * height * depth;
 
-    if (weight > 100) throw new Error('Overweight');
+    if (weight > 100) throw new AppError(ErrorsDescriptions.OVERWEIGHT_ERROR, true, null, HttpStatusCode.BAD_REQUEST);
 
     const sizeCoef = this.calculateVolumeCoef(volume);
     const weightCoef = this.calculateWeightCoef(weight);
@@ -103,7 +107,7 @@ export class DeliveryCostCalculator {
     );
 
     if (!size) {
-      throw new Error('Ошибка');
+      throw new AppError(ErrorsDescriptions.NO_TEMPLATE_SIZE_ERROR, true, null, HttpStatusCode.BAD_REQUEST);
     }
 
     return size.sizeCoef * size.weightCoef;

@@ -8,10 +8,11 @@ import Redis from 'ioredis';
 import deliveryRoute from './routes/calculateDelivery';
 dotenv.config();
 
-const app = express();
+export const app = express();
 
 export const redisClient = new Redis(process.env.REDIS_URL!);
 
+// todo: поправить корсы под прод
 const corsConfig = {
   origin: true,
   credentials: true
@@ -30,6 +31,8 @@ app.use(async (err: Error, req: Request, res: Response, _: NextFunction) => {
   await handler.handleError(err, res);
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`RUNNING PORT ${process.env.PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(process.env.PORT, () => {
+    console.log(`RUNNING PORT ${process.env.PORT}`);
+  });
+}

@@ -61,6 +61,6 @@ export const getDeliveryCost = async (req: GetDeliveryCostRequest, res: Response
 
     res.status(HttpStatusCode.OK).json(deliveryCost);
   } catch (error) {
-    return next(new AppError(ErrorsDescriptions.GET_DELIVERY_COST_ERROR, true, error, HttpStatusCode.BAD_REQUEST));
+    return next(new AppError(ErrorsDescriptions.GET_DELIVERY_COST_ERROR, true, error));
   }
 };

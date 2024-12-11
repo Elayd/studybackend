@@ -32,6 +32,13 @@ export class AppError extends Error {
 class ErrorHandler {
   public async handleError(appError: unknown, res?: Response): Promise<void> {
     if (appError instanceof AppError && res) {
+      if (appError.error instanceof AppError) {
+        res
+          .status(appError.error.httpCode || HttpStatusCode.INTERNAL_SERVER_ERROR)
+          .json({ message: appError.error.message });
+        return;
+      }
+
       if (appError.httpCode) {
         res.status(appError.httpCode).json({ message: appError.message });
         return;

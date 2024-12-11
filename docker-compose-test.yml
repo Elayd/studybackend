@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  redis-test:
+    image: redis
+    container_name: cache-test
+    command: --port 5555
+    ports:
+      - 5555:5555
+    expose:
+      - '5555'
+    networks:
+      - mynetwork-test
+
+  app-test:
+    build: ./
+    container_name: app-test
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - redis-test
+    ports:
+      - 7777:7777
+    networks:
+      - mynetwork-test
+    environment:
+      - PORT=7777
+      - NODE_ENV=${NODE_ENV}
+      - REDIS_URL=redis://cache-test:5555
+
+networks:
+  mynetwork-test:
+    name: mynetwork-test

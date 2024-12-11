@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { ErrorsDescriptions } from '../enums/errorsDescriptions';
+import { AppError } from '../helpers/errorHandler';
+import HttpStatusCode from '../enums/httpStatusCodes';
 
 export async function getCoords(address: string) {
   const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
@@ -11,6 +14,6 @@ export async function getCoords(address: string) {
       throw new Error('Адрес не найден');
     }
   } catch (error) {
-    throw error;
+    throw new AppError(ErrorsDescriptions.GET_COORDS_ERROR, true, error, HttpStatusCode.BAD_REQUEST);
   }
 }

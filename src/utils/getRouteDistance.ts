@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { AppError } from '../helpers/errorHandler';
+import { ErrorsDescriptions } from '../enums/errorsDescriptions';
+import HttpStatusCode from '../enums/httpStatusCodes';
 
 export async function getRouteDistance(
   fromCoords: { lat: number; lon: number },
@@ -14,6 +17,6 @@ export async function getRouteDistance(
       throw new Error('Маршрут не найден');
     }
   } catch (error) {
-    throw error;
+    throw new AppError(ErrorsDescriptions.GET_DISTANCE_ERROR, true, error, HttpStatusCode.BAD_REQUEST);
   }
 }
