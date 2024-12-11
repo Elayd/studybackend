@@ -93,7 +93,6 @@ export class DeliveryCostCalculator {
   }
 
   private calculateDistanceCoef(distance: number): number {
-    console.log(distance, 'distance');
     const distanceInThousands = Math.ceil(distance / 10000);
     return Math.pow(1.005, distanceInThousands);
   }
